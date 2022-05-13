@@ -15,30 +15,53 @@ class PhpCsFixer
 
     private Finder $finder;
 
-    public function __construct(private string $type, private string $dir)
+    public function __construct(private string $type, private string $dir, private array $dirs)
     {
         $this->config = (new PhpCsFixerConfig)
             ->setRiskyAllowed(true)
             ->setUsingCache(true);
 
         $this->finder = Finder::create();
-        $this->finder();
-        $this->rules();
     }
 
     public static function php(string $dir): static
     {
-        return new static('php', $dir);
+        $dirs = [
+            $dir . '/src',
+            $dir . '/tests',
+        ];
+        return new static('php', $dir, $dirs);
     }
 
     public static function laravelApp(string $dir): static
     {
-        return new static('laravel-app', $dir);
+        $dirs = [
+            $dir . '/app',
+            $dir . '/config',
+            $dir . '/database',
+            $dir . '/resources',
+            $dir . '/routes',
+            $dir . '/lang',
+            $dir . '/tests',
+        ];
+        return new static('laravel-app', $dir, $dirs);
     }
 
     public static function laravelPackage(string $dir): static
     {
-        return new static('laravel-package', $dir);
+        $dirs = [
+            $dir . '/src',
+            $dir . '/config',
+            $dir . '/tests',
+        ];
+        return new static('laravel-package', $dir, $dirs);
+    }
+
+    public function excludeDir(string $folderName): static
+    {
+        $this->dirs = collect($this->dirs)->flip()->forget($this->dir . '/' . $folderName)->flip()->toArray();
+
+        return $this;
     }
 
     public function withFinder(Closure $callback): static
@@ -70,11 +93,7 @@ class PhpCsFixer
     {
         $finder = $this->finder->notPath('coverage')
                                ->notPath('vendor')
-                               ->in([
-                                   $this->dir . '/src',
-                                   $this->dir . '/config',
-                                   $this->dir . '/tests',
-                               ])
+                               ->in($this->dirs)
                                ->name('*.php')
                                ->notName('*.blade.php')
                                ->ignoreDotFiles(true)
@@ -92,15 +111,7 @@ class PhpCsFixer
         $finder = $this->finder->notPath('bootstrap/*')
                                ->notPath('storage/*')
                                ->notPath('vendor')
-                               ->in([
-                                   $this->dir . '/app',
-                                   $this->dir . '/config',
-                                   $this->dir . '/database',
-                                   $this->dir . '/resources',
-                                   $this->dir . '/routes',
-                                   $this->dir . '/lang',
-                                   $this->dir . '/tests',
-                               ])
+                               ->in($this->dirs)
                                ->name('*.php')
                                ->notName('*.blade.php')
                                ->ignoreDotFiles(true)
@@ -116,10 +127,7 @@ class PhpCsFixer
     private function getDefaultPhpFinder(?Closure $callback): Finder
     {
         $finder = $this->finder->notPath('vendor')
-                               ->in([
-                                   $this->dir . '/src',
-                                   $this->dir . '/tests',
-                               ])
+                               ->in($this->dirs)
                                ->name('*.php')
                                ->ignoreDotFiles(true)
                                ->ignoreVCS(true);
@@ -153,8 +161,10 @@ class PhpCsFixer
         return $this;
     }
 
-    public function build(): ConfigInterface
+    public function build(?Closure $finderCallback = null, ?Closure $rulesCallback = null): ConfigInterface
     {
+        $this->finder($finderCallback);
+        $this->rules($rulesCallback);
         $this->config->setFinder($this->finder);
 
         return $this->config;
