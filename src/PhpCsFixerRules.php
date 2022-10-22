@@ -83,10 +83,12 @@ class PhpCsFixerRules
         'no_spaces_around_offset'                       => ['positions' => ['inside', 'outside']],
         'no_spaces_inside_parenthesis'                  => true,
         'no_trailing_comma_in_singleline'               => [
-            'arguments',
-            'array_destructuring',
-            'array',
-            'group_import',
+            'elements' => [
+                'arguments',
+                'array_destructuring',
+                'array',
+                'group_import',
+            ],
         ],
         'no_trailing_whitespace'                        => true,
         'no_trailing_whitespace_in_comment'             => true,
