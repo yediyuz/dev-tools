@@ -141,6 +141,11 @@ class PhpCsFixerRules
         'whitespace_after_comma_in_array'               => true,
         'yoda_style'                                    => false,
         'new_with_braces'                               => false,
+        'global_namespace_import'                       => [
+            'import_classes'   => true,
+            'import_constants' => null,
+            'import_functions' => null,
+        ],
     ];
 
     public function set(string $rulePath, mixed $value): static
