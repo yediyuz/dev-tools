@@ -17,7 +17,7 @@ trait WithConsecutive
      * @param array $firstCallArguments
      * @param array ...$consecutiveCallsArguments
      *
-     * @return iterable<callable<mixed>>
+     * @return iterable<Callback<mixed>>
      */
     public static function withConsecutive(array $firstCallArguments, array ...$consecutiveCallsArguments): iterable
     {
