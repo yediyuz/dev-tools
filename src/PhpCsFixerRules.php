@@ -109,7 +109,6 @@ class PhpCsFixerRules
         'phpdoc_no_access'                              => true,
         'phpdoc_no_package'                             => true,
         'phpdoc_no_useless_inheritdoc'                  => true,
-        'phpdoc_order'                                  => true,
         'phpdoc_scalar'                                 => true,
         'phpdoc_single_line_var_spacing'                => true,
         'phpdoc_summary'                                => true,
@@ -147,6 +146,70 @@ class PhpCsFixerRules
             'import_classes'   => true,
             'import_constants' => null,
             'import_functions' => null,
+        ],
+        'phpdoc_order'                                  => [
+            'order' => [
+                'noinspection',
+                'deprecated',
+                'author',
+                'copyright',
+                'license',
+                'see',
+                'link',
+                'todo',
+                'example',
+                'property',
+                'method',
+                'api',
+                'throws',
+                'template',
+                'phpstan-template',
+                'param',
+                'phpstan-param',
+                'phpstan-return',
+                'return',
+            ],
+        ],
+        'phpdoc_separation'                             => [
+            'groups' => [
+                [
+                    'noinspection',
+                ],
+                [
+                    'deprecated',
+                    'link',
+                    'see',
+                    'since',
+                ],
+                [
+                    'author',
+                    'copyright',
+                    'license',
+                ],
+                [
+                    'category',
+                    'package',
+                    'subpackage',
+                ],
+                [
+                    'throws',
+                ],
+                [
+                    'property',
+                    'property-read',
+                    'property-write',
+                ],
+                [
+                    'phpstan-template',
+                    'template',
+                    'param',
+                    'phpstan-param',
+                ],
+                [
+                    'phpstan-return',
+                    'return',
+                ],
+            ],
         ],
     ];
 
