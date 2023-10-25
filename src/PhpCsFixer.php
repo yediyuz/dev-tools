@@ -11,11 +11,12 @@ use PhpCsFixer\Finder;
 
 class PhpCsFixer
 {
+
     private PhpCsFixerConfig $config;
 
     private Finder $finder;
 
-    public function __construct(private string $type, private string $dir, private array $dirs)
+    public function __construct(private readonly string $type, private readonly string $dir, private array $dirs)
     {
         $this->config = (new PhpCsFixerConfig)
             ->setRiskyAllowed(true)
@@ -24,13 +25,20 @@ class PhpCsFixer
         $this->finder = Finder::create();
     }
 
+    private static function dirsFilter(array $dirs): array
+    {
+        return array_filter($dirs, static function ($dir) {
+            return filled(glob($dir));
+        });
+    }
+
     public static function php(string $dir): static
     {
         $dirs = [
             $dir . '/src',
             $dir . '/tests',
         ];
-        return new static('php', $dir, $dirs);
+        return new static('php', $dir, self::dirsFilter($dirs));
     }
 
     public static function laravelApp(string $dir): static
@@ -44,7 +52,7 @@ class PhpCsFixer
             $dir . '/lang',
             $dir . '/tests',
         ];
-        return new static('laravel-app', $dir, $dirs);
+        return new static('laravel-app', $dir, self::dirsFilter($dirs));
     }
 
     public static function laravelPackage(string $dir): static
@@ -54,7 +62,7 @@ class PhpCsFixer
             $dir . '/config',
             $dir . '/tests',
         ];
-        return new static('laravel-package', $dir, $dirs);
+        return new static('laravel-package', $dir, self::dirsFilter($dirs));
     }
 
     public function excludeDir(string $folderName): static
@@ -81,8 +89,8 @@ class PhpCsFixer
     public function finder(?Closure $finder = null): static
     {
         $this->finder = match ($this->type) {
-            'php'             => $this->getDefaultPhpFinder($finder),
-            'laravel-app'     => $this->getDefaultLaravelAppFinder($finder),
+            'php' => $this->getDefaultPhpFinder($finder),
+            'laravel-app' => $this->getDefaultLaravelAppFinder($finder),
             'laravel-package' => $this->getDefaultLaravelPackageFinder($finder),
         };
 
