@@ -18,7 +18,7 @@
         "php": "^8.1",
         "jetbrains/phpstorm-attributes": "^1.0",
         "spatie/ray": "^1.37.1",
-        "friendsofphp/php-cs-fixer": "^3.32.1",
+        "friendsofphp/php-cs-fixer": "^3.29",
         "illuminate/support": "^8.0|^9.0|^10.4.1",
         "illuminate/collections": "^8.0|^9.0|^10.4.1"
     },
