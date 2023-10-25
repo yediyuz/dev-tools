@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 namespace Yediyuz\DevTools;
 
 use Illuminate\Support\Collection;
@@ -124,7 +123,10 @@ class PhpCsFixerRules
         'phpdoc_var_annotation_correct_order'           => true,
         'short_scalar_cast'                             => true,
         'single_blank_line_at_eof'                      => true,
-        'single_blank_line_before_namespace'            => true,
+        'blank_lines_before_namespace'                  => [
+            'min_line_breaks' => 1,
+            'max_line_breaks' => 1,
+        ],
         'single_import_per_statement'                   => true,
         'single_line_after_imports'                     => true,
         'single_line_comment_style'                     => ['comment_types' => ['hash']],
