@@ -25,7 +25,7 @@ class PhpCsFixerRules
         'blank_line_before_statement'                   => [
             'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
         ],
-        'braces'                                        => true,
+        // 'braces'                                        => true,
         'cast_spaces'                                   => true,
         'class_attributes_separation'                   => [
             'elements' => [
@@ -46,7 +46,7 @@ class PhpCsFixerRules
         'full_opening_tag'                              => true,
         'fully_qualified_strict_types'                  => true,
         'function_declaration'                          => true,
-        'function_typehint_space'                       => true,
+        // 'function_typehint_space'                       => true,
         'general_phpdoc_tag_rename'                     => true,
         'heredoc_to_nowdoc'                             => true,
         'include'                                       => true,
@@ -80,7 +80,7 @@ class PhpCsFixerRules
         'no_singleline_whitespace_before_semicolons'    => true,
         'no_spaces_after_function_name'                 => true,
         'no_spaces_around_offset'                       => ['positions' => ['inside', 'outside']],
-        'no_spaces_inside_parenthesis'                  => true,
+        // 'no_spaces_inside_parenthesis'                  => true,
         'no_trailing_comma_in_singleline'               => [
             'elements' => [
                 'arguments',
@@ -141,7 +141,7 @@ class PhpCsFixerRules
         'visibility_required'                           => ['elements' => ['property', 'method', 'const']],
         'whitespace_after_comma_in_array'               => true,
         'yoda_style'                                    => false,
-        'new_with_braces'                               => false,
+        // 'new_with_braces'                               => false,
         'global_namespace_import'                       => [
             'import_classes'   => true,
             'import_constants' => null,
